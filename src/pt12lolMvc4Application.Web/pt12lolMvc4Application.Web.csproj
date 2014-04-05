@@ -31,6 +31,17 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="1" xmlns="">
+          <Destination Path="Data Source=localhost%3bInitial Catalog=pt12lol-mvc4application-deployment%3bIntegrated Security=True%3bPooling=False" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=localhost%3bInitial Catalog=pt12lol-mvc4appliocation%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +50,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="1">
+          <Destination Path="Data Source=localhost%3bInitial Catalog=pt12lol-mvc4application-deployment%3bIntegrated Security=True%3bPooling=False" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=localhost%3bInitial Catalog=pt12lol-mvc4appliocation%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -189,8 +212,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -251,6 +280,10 @@
     <Content Include="Global.asax" />
     <Content Include="key.pfx" />
     <None Include="Properties\PublishProfiles\pt12lol.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -305,6 +338,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <None Include="Web.pt12lol.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
