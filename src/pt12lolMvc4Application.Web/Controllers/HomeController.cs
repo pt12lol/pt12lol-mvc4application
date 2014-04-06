@@ -4,10 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using log4net;
+
 namespace pt12lolMvc4Application.Web.Controllers
 {
     public class HomeController : Controller
     {
+        protected readonly ILog log;
+
+        public HomeController()
+        {
+            log = LogManager.GetLogger(this.GetType());
+            log.Debug("Should not be seen.");
+            log.Info("Hello, world!");
+            try
+            {
+                throw new Exception();
+            }
+            catch
+            {
+                log.Error("Exception caught!");
+            }
+        }
+
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
