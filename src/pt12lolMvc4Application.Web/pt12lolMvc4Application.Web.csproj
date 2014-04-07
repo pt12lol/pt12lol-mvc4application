@@ -351,6 +351,12 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pt12lolMvc4Application.Services\pt12lolMvc4Application.Services.csproj">
+      <Project>{c9d413a9-6e3b-4226-8e61-5b19a624c69f}</Project>
+      <Name>pt12lolMvc4Application.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
