@@ -31,6 +31,7 @@ namespace pt12lolMvc4Application.Web.Controllers
         {
             log.Info(logHelper.FormatLog(Request));
             ViewBag.Message = "Your app description page.";
+            throw new Exception();
             return View();
         }
 
