@@ -9,6 +9,6 @@ namespace pt12lolMvc4Application.Services.Interfaces
 {
     public interface ILogHelper
     {
-        string FormatLog(HttpRequestBase request);
+        string FormatLog(HttpRequest request);
     }
 }

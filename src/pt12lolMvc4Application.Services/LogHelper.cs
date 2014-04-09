@@ -11,7 +11,7 @@ namespace pt12lolMvc4Application.Services
 {
     public class LogHelper : ILogHelper
     {
-        public string FormatLog(HttpRequestBase request)
+        public string FormatLog(HttpRequest request)
         {
             string url = request.Url.ToString();
             string client = string.Format("{0} ({1})", request.UserHostAddress, request.UserHostName);

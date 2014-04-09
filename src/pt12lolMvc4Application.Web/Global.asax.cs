@@ -44,5 +44,10 @@ namespace pt12lolMvc4Application.Web
         {
             log.Error(Server.GetLastError());
         }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            log.Info(logHelper.FormatLog(this.Request));
+        }
     }
 }
