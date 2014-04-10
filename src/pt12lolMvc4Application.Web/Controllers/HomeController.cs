@@ -23,7 +23,6 @@ namespace pt12lolMvc4Application.Web.Controllers
 
         public ActionResult Index()
         {
-            _logger.Info("Hello, world!");
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             return View();
         }
