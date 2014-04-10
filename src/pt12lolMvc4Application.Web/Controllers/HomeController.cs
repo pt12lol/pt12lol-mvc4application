@@ -9,11 +9,11 @@ namespace pt12lolMvc4Application.Web.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ILog log;
+        readonly ILog logger;
 
         public HomeController()
         {
-            log = LogManager.GetLogger(this.GetType());
+            logger = LogManager.GetLogger(this.GetType());
         }
 
         public ActionResult Index()

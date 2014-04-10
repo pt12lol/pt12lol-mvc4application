@@ -34,5 +34,10 @@ namespace pt12lolMvc4Application.Services
             }
             return result;
         }
+
+        public string FormatLog(HttpResponse response)
+        {
+            return string.Format("HTTP Response: {0}", response.Status);
+        }
     }
 }
