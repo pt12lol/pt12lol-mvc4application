@@ -19,13 +19,13 @@ namespace pt12lolMvc4Application.Web
 {
     public class MvcApplication : HttpApplication
     {
-        readonly ILog logger;
-        readonly ILogHelper logHelper;
+        readonly ILog _logger;
+        readonly ILogHelper _logHelper;
 
         public MvcApplication()
         {
-            logger = LogManager.GetLogger(this.GetType());
-            logHelper = new LogHelper();
+            _logger = LogManager.GetLogger(this.GetType());
+            _logHelper = new LogHelper();
         }
 
         protected void Application_Start()
@@ -39,24 +39,24 @@ namespace pt12lolMvc4Application.Web
             AuthConfig.RegisterAuth();
 
             XmlConfigurator.Configure();
-            logger.Info("Application has started");
+            _logger.Info("Application has started");
         }
 
         void Application_EndRequest(object sender, EventArgs e)
         {
             if (Response.StatusCode >= 200 && Response.StatusCode < 300)
             {
-                logger.Info(logHelper.FormatLog(Response));
+                _logger.Info(_logHelper.FormatLog(Response));
             }
             else
             {
-                logger.Warn(logHelper.FormatLog(Response));
+                _logger.Warn(_logHelper.FormatLog(Response));
             }
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            logger.Info(logHelper.FormatLog(Request));
+            _logger.Info(_logHelper.FormatLog(Request));
         }
     }
 }

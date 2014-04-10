@@ -9,15 +9,21 @@ namespace pt12lolMvc4Application.Web.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ILog logger;
+        readonly ILog _logger;
 
         public HomeController()
         {
-            logger = LogManager.GetLogger(this.GetType());
+            _logger = LogManager.GetLogger(this.GetType());
+        }
+
+        public HomeController(ILog logger)
+        {
+            _logger = logger;
         }
 
         public ActionResult Index()
         {
+            _logger.Info("Hello, world!");
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             return View();
         }
