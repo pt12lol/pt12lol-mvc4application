@@ -17,9 +17,6 @@ using pt12lolMvc4Application.Services.Interfaces;
 
 namespace pt12lolMvc4Application.Web
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : HttpApplication
     {
         readonly ILog logger;
@@ -55,11 +52,6 @@ namespace pt12lolMvc4Application.Web
             {
                 logger.Warn(logHelper.FormatLog(Response));
             }
-        }
-
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            logger.Error(Server.GetLastError());
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
