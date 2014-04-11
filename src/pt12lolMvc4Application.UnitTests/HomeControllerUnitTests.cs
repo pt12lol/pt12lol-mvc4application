@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using log4net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using pt12lolMvc4Application.Web.Controllers;
@@ -10,7 +9,7 @@ namespace pt12lolMvc4Application.UnitTests
     [TestClass]
     public class HomeControllerUnitTests
     {
-        HomeController _controller;
+        readonly HomeController _controller;
 
         public HomeControllerUnitTests()
         {

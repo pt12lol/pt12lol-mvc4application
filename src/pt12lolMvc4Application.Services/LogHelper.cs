@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.Specialized;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using pt12lolMvc4Application.Services.Interfaces;
 
