@@ -21,9 +21,23 @@ namespace pt12lolMvc4Application.Services
             {
                 StringBuilder received = new StringBuilder("\n{ \n");
                 NameValueCollection form = request.Form;
+                bool first = true;
                 foreach (string key in form.Keys)
                 {
-                    received.Append(string.Format("\t{0}: \"{1}\",\n", key, form[key]));
+                    if (!first)
+                    {
+                        received.Append(",\n");
+                    }
+                    else
+                    {
+                        first = false;
+                    }
+                    string val = form[key];
+                    if (key.ToLower() == "password" || key.ToLower() == "pass")
+                    {
+                        val = new string('*', val.Length);
+                    }
+                    received.Append(string.Format("\t{0}: \"{1}\"", key, val));
                 }
                 received.Append("\n}");
                 return result + received;
