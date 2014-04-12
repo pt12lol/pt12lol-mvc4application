@@ -1,4 +1,6 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 using System.Web;
 using pt12lolMvc4Application.Services.Interfaces;
@@ -33,7 +35,12 @@ namespace pt12lolMvc4Application.Services
                         first = false;
                     }
                     string val = form[key];
-                    if (key.ToLower() == "password" || key.ToLower() == "pass")
+                    if ((new [] {
+                            "password", "passwd", "pass", 
+                            "confirmpassword", "confirmpasswd", "confirmpass",
+                            "confpassword", "confpasswd", "confpass",
+                            "confirm", "conf"
+                        }).Contains(key.ToLower()))
                     {
                         val = new string('*', val.Length);
                     }
