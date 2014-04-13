@@ -368,6 +368,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\db\pt12lolMvc4Application.Db.Wrapper\pt12lolMvc4Application.Db.Wrapper.csproj">
+      <Project>{63932107-eb41-40ab-a3a0-6d78b21050e6}</Project>
+      <Name>pt12lolMvc4Application.Db.Wrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\pt12lolMvc4Application.Services\pt12lolMvc4Application.Services.csproj">
       <Project>{c9d413a9-6e3b-4226-8e61-5b19a624c69f}</Project>
       <Name>pt12lolMvc4Application.Services</Name>

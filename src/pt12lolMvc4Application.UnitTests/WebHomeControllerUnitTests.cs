@@ -7,13 +7,15 @@ using Rhino.Mocks;
 namespace pt12lolMvc4Application.UnitTests
 {
     [TestClass]
-    public class HomeControllerUnitTests
+    public class WebHomeControllerUnitTests
     {
         readonly HomeController _controller;
+        readonly ILog _logger;
 
-        public HomeControllerUnitTests()
+        public WebHomeControllerUnitTests()
         {
-            _controller = new HomeController(MockRepository.GenerateMock<ILog>());
+            _logger = MockRepository.GenerateMock<ILog>();
+            _controller = new HomeController(_logger);
         }
 
         [TestMethod]

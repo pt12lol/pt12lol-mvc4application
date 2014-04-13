@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Globalization;
-using System.Web.Security;
 
 namespace pt12lolMvc4Application.Web.Models
 {
@@ -18,7 +14,7 @@ namespace pt12lolMvc4Application.Web.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
     }
 
-    [Table("UserProfile")]
+    [Table("UserProfiles")]
     public class UserProfile
     {
         [Key]

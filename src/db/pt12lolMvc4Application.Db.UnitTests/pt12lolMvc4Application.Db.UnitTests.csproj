@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AFFF9175-49A3-489E-B040-47F567D6A886}</ProjectGuid>
+    <ProjectGuid>{01456BE7-A881-42D1-97C5-94970E27CB4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>pt12lolMvc4Application.UnitTests</RootNamespace>
-    <AssemblyName>pt12lolMvc4Application.UnitTests</AssemblyName>
+    <RootNamespace>pt12lolMvc4Application.Db.UnitTests</RootNamespace>
+    <AssemblyName>pt12lolMvc4Application.Db.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,8 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,15 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\..\lib\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,17 +50,32 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="WebHomeControllerUnitTests.cs" />
+    <Compile Include="ClassLibServiceUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WrapperUnitTests.cs" />
+    <Compile Include="WebAPIServiceUnitTests.cs" />
+    <Compile Include="WCFServiceUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\pt12lolMvc4Application.Web\pt12lolMvc4Application.Web.csproj">
-      <Project>{e7ed59b6-f38c-4300-853d-e83044abb1a9}</Project>
-      <Name>pt12lolMvc4Application.Web</Name>
+    <ProjectReference Include="..\pt12lolMvc4Application.Db.Models\pt12lolMvc4Application.Db.Models.csproj">
+      <Project>{efcee1ee-d20c-4b90-8a5a-2a9410fc8040}</Project>
+      <Name>pt12lolMvc4Application.Db.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pt12lolMvc4Application.Db.Repositories\pt12lolMvc4Application.Db.Repositories.csproj">
+      <Project>{759cf6c4-49d1-4e83-9ed0-3deb91bf23cc}</Project>
+      <Name>pt12lolMvc4Application.Db.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.ClassLib\pt12lolMvc4Application.Db.Service.ClassLib.csproj">
+      <Project>{cccfbf23-f607-4c43-a2a3-33c0b3734f54}</Project>
+      <Name>pt12lolMvc4Application.Db.Service.ClassLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.WCF\pt12lolMvc4Application.Db.Service.WCF.csproj">
+      <Project>{9a1aea3d-d128-45b6-85a8-88c5898adbc6}</Project>
+      <Name>pt12lolMvc4Application.Db.Service.WCF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.WebAPI\pt12lolMvc4Application.Db.Service.WebAPI.csproj">
+      <Project>{2282e8b6-61ea-44a0-8f49-086fa7b82aeb}</Project>
+      <Name>pt12lolMvc4Application.Db.Service.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
@@ -93,7 +98,6 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
