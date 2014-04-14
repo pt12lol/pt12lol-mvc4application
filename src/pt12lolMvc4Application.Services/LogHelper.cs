@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Web;
-using pt12lolMvc4Application.Services.Interfaces;
 
 namespace pt12lolMvc4Application.Services
 {

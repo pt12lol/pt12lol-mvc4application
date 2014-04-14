@@ -2,7 +2,7 @@
 
 namespace pt12lolMvc4Application.Db.Models
 {
-    public class UserProfile : IDbModel
+    public class UserProfile
     {
         public UserProfile()
         {

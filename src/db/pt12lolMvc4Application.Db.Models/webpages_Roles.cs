@@ -2,7 +2,7 @@
 
 namespace pt12lolMvc4Application.Db.Models
 {
-    public class webpages_Roles : IDbModel
+    public class webpages_Roles
     {
         public webpages_Roles()
         {

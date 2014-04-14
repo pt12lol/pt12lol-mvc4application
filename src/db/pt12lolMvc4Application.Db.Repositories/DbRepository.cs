@@ -3,65 +3,69 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using pt12lolMvc4Application.Db.Models;
 
 namespace pt12lolMvc4Application.Db.Repositories
 {
-    public class DbRepository<T> : IDbRepository<T> where T: class, IDbModel
+    public class DbRepository<T> : IDbRepository<T> where T: class
     {
-        readonly Entities _dbEntities;
+        readonly DbContext _dbContext;
         bool _disposed;
         
         public DbRepository()
         {
-            _dbEntities = new Entities();
+            _dbContext = new Entities();
             _disposed = false;
+        }
+
+        public DbRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
         }
 
         public T Get(int id)
         {
-            return _dbEntities.Set<T>().Find(id);
+            return _dbContext.Set<T>().Find(id);
         }
 
         public IQueryable<T> Get()
         {
-            return _dbEntities.Set<T>();
+            return _dbContext.Set<T>();
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbEntities.Set<T>().Where(predicate);
+            return _dbContext.Set<T>().Where(predicate);
         }
 
         public async Task<T> GetAsync(int id)
         {
-            return await _dbEntities.Set<T>().FindAsync(id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public void Insert(T entity)
         {
-            _dbEntities.Set<T>().Add(entity);
+            _dbContext.Set<T>().Add(entity);
         }
 
         public void Update(T entity)
         {
-            _dbEntities.Entry(entity).State = EntityState.Modified;
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public void Remove(int id)
         {
-            T entity = _dbEntities.Set<T>().Find(id);
-            _dbEntities.Set<T>().Remove(entity);
+            T entity = _dbContext.Set<T>().Find(id);
+            _dbContext.Set<T>().Remove(entity);
         }
 
         public void Save()
         {
-            _dbEntities.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public async Task SaveAsync()
         {
-            await _dbEntities.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -70,7 +74,7 @@ namespace pt12lolMvc4Application.Db.Repositories
             {
                 if (disposing)
                 {
-                    _dbEntities.Dispose();
+                    _dbContext.Dispose();
                 }
             }
             _disposed = true;

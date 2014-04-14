@@ -2,7 +2,7 @@
 
 namespace pt12lolMvc4Application.Db.Models
 {
-    public class webpages_Membership : IDbModel
+    public class webpages_Membership
     {
         public int UserId { get; set; }
         public DateTime? CreateDate { get; set; }

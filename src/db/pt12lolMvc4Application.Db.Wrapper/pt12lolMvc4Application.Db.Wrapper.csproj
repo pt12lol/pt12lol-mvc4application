@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -39,7 +45,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassLib\UserProfileDbWrapper.cs" />
+    <Compile Include="IUserProfileDbWrapper.cs" />
+    <Compile Include="MapperInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pt12lolMvc4Application.Db.Models\pt12lolMvc4Application.Db.Models.csproj">
+      <Project>{efcee1ee-d20c-4b90-8a5a-2a9410fc8040}</Project>
+      <Name>pt12lolMvc4Application.Db.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.ClassLib\pt12lolMvc4Application.Db.Service.ClassLib.csproj">
+      <Project>{cccfbf23-f607-4c43-a2a3-33c0b3734f54}</Project>
+      <Name>pt12lolMvc4Application.Db.Service.ClassLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WCF\" />
+    <Folder Include="WebAPI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="key.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,8 +9,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using log4net;
 using log4net.Config;
+using pt12lolMvc4Application.Db.Wrapper;
 using pt12lolMvc4Application.Services;
-using pt12lolMvc4Application.Services.Interfaces;
 using pt12lolMvc4Application.Web.Models;
 using WebMatrix.WebData;
 
@@ -46,6 +46,8 @@ namespace pt12lolMvc4Application.Web
 
             XmlConfigurator.Configure();
             _logger.Info("Application has started");
+
+            MapperInitializer.Configure();
         }
 
         void Application_EndRequest(object sender, EventArgs e)

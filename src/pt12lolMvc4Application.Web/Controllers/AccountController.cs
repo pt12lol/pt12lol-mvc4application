@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using pt12lolMvc4Application.Db.Wrapper.ClassLib;
 using WebMatrix.WebData;
-using pt12lolMvc4Application.Web.Filters;
 using pt12lolMvc4Application.Web.Models;
+using pt12lolMvc4Application.Db.Wrapper;
 
 namespace pt12lolMvc4Application.Web.Controllers
 {
     [Authorize]
-    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        readonly IUserProfileDbWrapper _userProfileDbWrapper;
+
+        public AccountController()
+        {
+            _userProfileDbWrapper = new UserProfileDbWrapper();
+        }
+
         //
         // GET: /Account/Login
 
@@ -262,25 +268,42 @@ namespace pt12lolMvc4Application.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                //using (UsersContext db = new UsersContext())
+                //{
+                //    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                //    // Check if user already exists
+                //    if (user == null)
+                //    {
+                //        // Insert name into the profile table
+                //        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                //        db.SaveChanges();
+
+                //        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
+                //        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+
+                //        return RedirectToLocal(returnUrl);
+                //    }
+                //    else
+                //    {
+                //        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                //    }
+                //}
+
+                Db.Models.UserProfile user = _userProfileDbWrapper.GetUserProfileByName(model.UserName);
+                // Check if user already exists
+                if (user == null)
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
+                    // Insert name into the profile table
+                    _userProfileDbWrapper.AddUser(new Db.Models.UserProfile { UserName = model.UserName });
 
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+                    OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
+                    OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                    }
+                    return RedirectToLocal(returnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                 }
             }
 
