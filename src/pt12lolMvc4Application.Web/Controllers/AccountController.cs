@@ -22,6 +22,11 @@ namespace pt12lolMvc4Application.Web.Controllers
             _userProfileDbWrapper = new UserProfileDbWrapper();
         }
 
+        public AccountController(IUserProfileDbWrapper userProfileDbWrapper)
+        {
+            _userProfileDbWrapper = userProfileDbWrapper;
+        }
+
         //
         // GET: /Account/Login
 

@@ -47,7 +47,7 @@ namespace pt12lolMvc4Application.Web
             XmlConfigurator.Configure();
             _logger.Info("Application has started");
 
-            MapperInitializer.Configure();
+            pt12lolConfigurator.ConfigureAutoMapper();
         }
 
         void Application_EndRequest(object sender, EventArgs e)

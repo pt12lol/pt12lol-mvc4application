@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="ClassLib\UserProfileDbWrapper.cs" />
     <Compile Include="IUserProfileDbWrapper.cs" />
-    <Compile Include="MapperInitializer.cs" />
+    <Compile Include="pt12lolConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
