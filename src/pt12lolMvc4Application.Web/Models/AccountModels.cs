@@ -4,24 +4,24 @@ using System.Data.Entity;
 
 namespace pt12lolMvc4Application.Web.Models
 {
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("DefaultConnection")
-        {
-        }
+    //public class UsersContext : DbContext
+    //{
+    //    public UsersContext()
+    //        : base("DefaultConnection")
+    //    {
+    //    }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
+    //    public DbSet<UserProfile> UserProfiles { get; set; }
+    //}
 
-    [Table("UserProfiles")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-    }
+    //[Table("UserProfiles")]
+    //public class UserProfile
+    //{
+    //    [Key]
+    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+    //    public int UserId { get; set; }
+    //    public string UserName { get; set; }
+    //}
 
     public class RegisterExternalLoginModel
     {

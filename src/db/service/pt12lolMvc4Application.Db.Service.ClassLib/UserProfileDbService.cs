@@ -12,7 +12,7 @@ namespace pt12lolMvc4Application.Db.Service.ClassLib
 
         public UserProfileDbService()
         {
-            _repository = new DbRepository<UserProfile>();
+            _initializer = () => new DbRepository<UserProfile>();
         }
 
         public UserProfileDbService(Func<IDbRepository<UserProfile>> initializer)

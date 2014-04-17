@@ -13,7 +13,7 @@ namespace pt12lolMvc4Application.Db.Repositories
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    partial class Entities : DbContext
+    public partial class Entities : DbContext
     {
         public Entities()
             : base("name=Entities")

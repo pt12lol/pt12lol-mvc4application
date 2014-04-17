@@ -11,8 +11,8 @@ using log4net;
 using log4net.Config;
 using pt12lolMvc4Application.Db.Wrapper;
 using pt12lolMvc4Application.Services;
-using pt12lolMvc4Application.Web.Models;
 using WebMatrix.WebData;
+using LogManager = log4net.LogManager;
 
 namespace pt12lolMvc4Application.Web
 {
@@ -35,6 +35,9 @@ namespace pt12lolMvc4Application.Web
 
         protected void Application_Start()
         {
+            XmlConfigurator.Configure();
+            _logger.Info("Application has started");
+
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -43,9 +46,6 @@ namespace pt12lolMvc4Application.Web
             AuthConfig.RegisterAuth();
 
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
-
-            XmlConfigurator.Configure();
-            _logger.Info("Application has started");
 
             pt12lolConfigurator.ConfigureAutoMapper();
         }
@@ -69,26 +69,41 @@ namespace pt12lolMvc4Application.Web
 
         private class SimpleMembershipInitializer
         {
+            readonly ILog _logger;
+
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                _logger = LogManager.GetLogger(GetType());
+
+                //Database.SetInitializer<UsersContext>(null);
+
+                //try
+                //{
+                //    using (var context = new UsersContext())
+                //    {
+                //        if (!context.Database.Exists())
+                //        {
+                //            // Create the SimpleMembership database without Entity Framework migration schema
+                //            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
+                //        }
+                //    }
+
+                //    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
+                //}
 
                 try
                 {
-                    using (var context = new UsersContext())
-                    {
-                        if (!context.Database.Exists())
-                        {
-                            // Create the SimpleMembership database without Entity Framework migration schema
-                            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-                        }
-                    }
-
+                    _logger.Debug("Before crash");
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
+                    _logger.Debug("After crash");
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
+                    _logger.Error(ex);
                 }
             }
         }
