@@ -36,7 +36,7 @@ namespace pt12lolMvc4Application.Web
         protected void Application_Start()
         {
             XmlConfigurator.Configure();
-            _logger.Info("Application has started");
+            _logger.Info("Application has started.");
 
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -75,31 +75,11 @@ namespace pt12lolMvc4Application.Web
             {
                 _logger = LogManager.GetLogger(GetType());
 
-                //Database.SetInitializer<UsersContext>(null);
-
-                //try
-                //{
-                //    using (var context = new UsersContext())
-                //    {
-                //        if (!context.Database.Exists())
-                //        {
-                //            // Create the SimpleMembership database without Entity Framework migration schema
-                //            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-                //        }
-                //    }
-
-                //    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
-                //}
-
                 try
                 {
-                    _logger.Debug("Before crash");
+                    _logger.Debug("Database connection initializing starts.");
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
-                    _logger.Debug("After crash");
+                    _logger.Info("Database connection initialized successfully.");
                 }
                 catch (Exception ex)
                 {
