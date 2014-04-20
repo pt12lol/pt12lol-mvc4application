@@ -2,17 +2,17 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/19/2014 16:11:59
+-- Date Created: 04/20/2014 11:45:28
 -- Generated from EDMX file: C:\Users\Piotr\Documents\Visual Studio 2013\Projects\pt12lolMvc4Application\src\db\pt12lolMvc4Application.Db.Repositories\Model.edmx
 -- --------------------------------------------------
 
 -- Creating database if it doesn't exists
-IF NOT EXISTS (SELECT name FROM master.sys.databases WHERE name = N'pt12lol-mvc4application')
-	CREATE DATABASE [pt12lol-mvc4application];
+IF NOT EXISTS (SELECT name FROM master.sys.databases WHERE name = N'pt12lol-mvc4application-deployment')
+	CREATE DATABASE [pt12lol-mvc4application-deployment];
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [pt12lol-mvc4application];
+USE [pt12lol-mvc4application-deployment];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -185,6 +185,20 @@ ADD CONSTRAINT [FK_webpages_UsersInRoles_UserProfiles]
 CREATE INDEX [IX_FK_webpages_UsersInRoles_UserProfiles]
 ON [dbo].[webpages_UsersInRoles]
     ([UserProfiles_UserId]);
+GO
+
+-- Creating USER 'NT AUTHORITY\NETWORK SERVICE'
+USE [pt12lol-mvc4application-deployment]
+GO
+CREATE USER [NT AUTHORITY\NETWORK SERVICE] FOR LOGIN [NT AUTHORITY\NETWORK SERVICE]
+GO
+USE [pt12lol-mvc4application-deployment]
+GO
+ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [NT AUTHORITY\NETWORK SERVICE]
+GO
+USE [pt12lol-mvc4application-deployment]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [NT AUTHORITY\NETWORK SERVICE]
 GO
 
 -- --------------------------------------------------
