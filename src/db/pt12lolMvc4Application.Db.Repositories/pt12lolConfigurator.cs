@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Data.Entity.SqlServerCompact;
 
 namespace pt12lolMvc4Application.Db.Repositories
 {
@@ -6,7 +7,10 @@ namespace pt12lolMvc4Application.Db.Repositories
     {
         public static void InitializeDbConnection()
         {
-            bool any = new Entities().UserProfiles.Any();
+            using (DbContext context = new Entities())
+            {
+                context.Database.Connection.Open();
+            }
         }
     }
 }
