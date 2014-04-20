@@ -12,7 +12,6 @@ using log4net.Config;
 using pt12lolMvc4Application.Db.Wrapper;
 using pt12lolMvc4Application.Services;
 using WebMatrix.WebData;
-using LogManager = log4net.LogManager;
 
 namespace pt12lolMvc4Application.Web
 {
@@ -35,19 +34,32 @@ namespace pt12lolMvc4Application.Web
 
         protected void Application_Start()
         {
-            XmlConfigurator.Configure();
-            _logger.Info("Application has started.");
+            try
+            {
+                XmlConfigurator.Configure();
+                _logger.Info("Application is starting...");
 
-            AreaRegistration.RegisterAllAreas();
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+                AreaRegistration.RegisterAllAreas();
+                WebApiConfig.Register(GlobalConfiguration.Configuration);
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+                AuthConfig.RegisterAuth();
 
-            LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
+                _logger.Debug("Lazy initialization has started.");
+                LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
+                _logger.Debug("Lazy initialization succeded.");
 
-            pt12lolConfigurator.ConfigureAutoMapper();
+                pt12lolConfigurator.ConfigureAutoMapper();
+                pt12lolConfigurator.InitializeDbConnection();
+
+                _logger.Info("Application has been configured.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+            _logger.Info("Application has started successfully.");
         }
 
         void Application_EndRequest(object sender, EventArgs e)
@@ -69,22 +81,9 @@ namespace pt12lolMvc4Application.Web
 
         private class SimpleMembershipInitializer
         {
-            readonly ILog _logger;
-
             public SimpleMembershipInitializer()
             {
-                _logger = LogManager.GetLogger(GetType());
-
-                try
-                {
-                    _logger.Debug("Database connection initializing starts.");
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
-                    _logger.Info("Database connection initialized successfully.");
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex);
-                }
+                WebSecurity.InitializeDatabaseConnection("AuthenticationConnection", "UserProfiles", "UserId", "UserName", autoCreateTables: true);
             }
         }
     }

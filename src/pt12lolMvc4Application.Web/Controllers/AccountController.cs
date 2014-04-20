@@ -5,7 +5,9 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using pt12lolMvc4Application.Db.Models;
 using pt12lolMvc4Application.Db.Wrapper.ClassLib;
+using pt12lolMvc4Application.Web.Services;
 using WebMatrix.WebData;
 using pt12lolMvc4Application.Web.Models;
 using pt12lolMvc4Application.Db.Wrapper;
@@ -16,15 +18,18 @@ namespace pt12lolMvc4Application.Web.Controllers
     public class AccountController : Controller
     {
         readonly IUserProfileDbWrapper _userProfileDbWrapper;
+        readonly IAuthenticationHelper _authenticationHelper;
 
         public AccountController()
         {
             _userProfileDbWrapper = new UserProfileDbWrapper();
+            _authenticationHelper = new AuthenticationHelper();
         }
 
-        public AccountController(IUserProfileDbWrapper userProfileDbWrapper)
+        public AccountController(IUserProfileDbWrapper userProfileDbWrapper, IAuthenticationHelper authenticationHelper)
         {
             _userProfileDbWrapper = userProfileDbWrapper;
+            _authenticationHelper = authenticationHelper;
         }
 
         //
@@ -45,7 +50,8 @@ namespace pt12lolMvc4Application.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            string salt = _userProfileDbWrapper.GetSaltByName(model.UserName);
+            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password + salt, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -89,8 +95,12 @@ namespace pt12lolMvc4Application.Web.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    string salt = _authenticationHelper.CreateSalt();
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password + salt);
+                    webpages_Membership membership = _userProfileDbWrapper.GetMembershipByUserName(model.UserName);
+                    membership.PasswordSalt = salt;
+                    _userProfileDbWrapper.UpdateMemberfship(membership);
+                    WebSecurity.Login(model.UserName, model.Password + salt);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -338,12 +348,12 @@ namespace pt12lolMvc4Application.Web.Controllers
         public ActionResult RemoveExternalLogins()
         {
             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
-            List<ExternalLogin> externalLogins = new List<ExternalLogin>();
+            List<ExternalLoginModel> externalLogins = new List<ExternalLoginModel>();
             foreach (OAuthAccount account in accounts)
             {
                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);
 
-                externalLogins.Add(new ExternalLogin
+                externalLogins.Add(new ExternalLoginModel
                 {
                     Provider = account.Provider,
                     ProviderDisplayName = clientData.DisplayName,

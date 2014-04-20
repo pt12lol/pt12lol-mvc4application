@@ -6,5 +6,9 @@
         {
             Service.ClassLib.pt12lolConfigurator.ConfigureAutoMapper();
         }
+        public static void InitializeDbConnection()
+        {
+            Service.ClassLib.pt12lolConfigurator.InitializeDbConnection();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace pt12lolMvc4Application.Db.Repositories
     public partial class Entities : DbContext
     {
         public Entities()
-            : base("name=Entities")
+            : base("name=EntitiesConnection")
         {
         }
     

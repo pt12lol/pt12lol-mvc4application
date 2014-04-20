@@ -1,5 +1,4 @@
-﻿using System;
-using pt12lolMvc4Application.Db.Service.ClassLib;
+﻿using pt12lolMvc4Application.Db.Service.ClassLib;
 
 namespace pt12lolMvc4Application.Db.Wrapper.ClassLib
 {
@@ -25,6 +24,21 @@ namespace pt12lolMvc4Application.Db.Wrapper.ClassLib
         public void AddUser(Models.UserProfile toAdd)
         {
             _service.AddUser(toAdd);
+        }
+
+        public string GetSaltByName(string name)
+        {
+            return _service.GetSaltByUserName(name);
+        }
+    
+        public void UpdateMemberfship(Models.webpages_Membership toUpdate)
+        {
+            _service.UpdateMembership(toUpdate);
+        }
+
+        public Models.webpages_Membership GetMembershipByUserName(string userName)
+        {
+            return _service.GetMembershipByUserName(userName);
         }
     }
 }

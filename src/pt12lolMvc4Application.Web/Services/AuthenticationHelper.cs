@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace pt12lolMvc4Application.Web.Services
 {
-    class AuthenticationHelper : IAuthenticationHelper
+    public class AuthenticationHelper : IAuthenticationHelper
     {
         RandomNumberGenerator _generator;
         readonly Func<RandomNumberGenerator> _generatorInitializer; 
