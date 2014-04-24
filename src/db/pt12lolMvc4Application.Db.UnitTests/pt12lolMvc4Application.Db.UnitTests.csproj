@@ -47,6 +47,9 @@
     <Reference Include="EntityFramework.SqlServerCompact">
       <HintPath>..\..\packages\EntityFramework.SqlServerCompact.6.1.0\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -68,6 +71,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ClassLibServiceUnitTests.cs" />
+    <Compile Include="FakeDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WrapperUnitTests.cs" />
     <Compile Include="WebAPIServiceUnitTests.cs" />
@@ -82,17 +86,13 @@
       <Project>{759cf6c4-49d1-4e83-9ed0-3deb91bf23cc}</Project>
       <Name>pt12lolMvc4Application.Db.Repositories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\pt12lolMvc4Application.Db.Wrapper\pt12lolMvc4Application.Db.Wrapper.csproj">
+      <Project>{63932107-eb41-40ab-a3a0-6d78b21050e6}</Project>
+      <Name>pt12lolMvc4Application.Db.Wrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.ClassLib\pt12lolMvc4Application.Db.Service.ClassLib.csproj">
       <Project>{cccfbf23-f607-4c43-a2a3-33c0b3734f54}</Project>
       <Name>pt12lolMvc4Application.Db.Service.ClassLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.WCF\pt12lolMvc4Application.Db.Service.WCF.csproj">
-      <Project>{9a1aea3d-d128-45b6-85a8-88c5898adbc6}</Project>
-      <Name>pt12lolMvc4Application.Db.Service.WCF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\service\pt12lolMvc4Application.Db.Service.WebAPI\pt12lolMvc4Application.Db.Service.WebAPI.csproj">
-      <Project>{2282e8b6-61ea-44a0-8f49-086fa7b82aeb}</Project>
-      <Name>pt12lolMvc4Application.Db.Service.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

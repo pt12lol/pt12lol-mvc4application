@@ -16,9 +16,9 @@ namespace pt12lolMvc4Application.Db.Wrapper.ClassLib
             _service = service;
         }
 
-        public Models.UserProfile GetUserProfileByName(string name)
+        public Models.UserProfile GetUserProfileByUserName(string name)
         {
-            return _service.GetUserProfileByName(name);
+            return _service.GetUserProfileByUserName(name);
         }
 
         public void AddUser(Models.UserProfile toAdd)
@@ -26,12 +26,12 @@ namespace pt12lolMvc4Application.Db.Wrapper.ClassLib
             _service.AddUser(toAdd);
         }
 
-        public string GetSaltByName(string name)
+        public string GetPasswordSaltByName(string name)
         {
-            return _service.GetSaltByUserName(name);
+            return _service.GetPasswordSaltByUserName(name);
         }
     
-        public void UpdateMemberfship(Models.webpages_Membership toUpdate)
+        public void UpdateMembership(Models.webpages_Membership toUpdate)
         {
             _service.UpdateMembership(toUpdate);
         }

@@ -50,7 +50,7 @@ namespace pt12lolMvc4Application.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            string salt = _userProfileDbWrapper.GetSaltByName(model.UserName);
+            string salt = _userProfileDbWrapper.GetPasswordSaltByName(model.UserName);
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password + salt, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
@@ -99,7 +99,7 @@ namespace pt12lolMvc4Application.Web.Controllers
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password + salt);
                     webpages_Membership membership = _userProfileDbWrapper.GetMembershipByUserName(model.UserName);
                     membership.PasswordSalt = salt;
-                    _userProfileDbWrapper.UpdateMemberfship(membership);
+                    _userProfileDbWrapper.UpdateMembership(membership);
                     WebSecurity.Login(model.UserName, model.Password + salt);
                     return RedirectToAction("Index", "Home");
                 }
@@ -282,34 +282,12 @@ namespace pt12lolMvc4Application.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                // Insert a new user into the database
-                //using (UsersContext db = new UsersContext())
-                //{
-                //    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                //    // Check if user already exists
-                //    if (user == null)
-                //    {
-                //        // Insert name into the profile table
-                //        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                //        db.SaveChanges();
-
-                //        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                //        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                //        return RedirectToLocal(returnUrl);
-                //    }
-                //    else
-                //    {
-                //        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                //    }
-                //}
-
-                Db.Models.UserProfile user = _userProfileDbWrapper.GetUserProfileByName(model.UserName);
+                UserProfile user = _userProfileDbWrapper.GetUserProfileByUserName(model.UserName);
                 // Check if user already exists
                 if (user == null)
                 {
                     // Insert name into the profile table
-                    _userProfileDbWrapper.AddUser(new Db.Models.UserProfile { UserName = model.UserName });
+                    _userProfileDbWrapper.AddUser(new UserProfile { UserName = model.UserName });
 
                     OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                     OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

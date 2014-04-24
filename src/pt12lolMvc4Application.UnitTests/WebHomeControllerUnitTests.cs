@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 using log4net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using pt12lolMvc4Application.Web.Controllers;
-using Rhino.Mocks;
 
 namespace pt12lolMvc4Application.UnitTests
 {
@@ -10,12 +10,10 @@ namespace pt12lolMvc4Application.UnitTests
     public class WebHomeControllerUnitTests
     {
         readonly HomeController _controller;
-        readonly ILog _logger;
 
         public WebHomeControllerUnitTests()
         {
-            _logger = MockRepository.GenerateMock<ILog>();
-            _controller = new HomeController(_logger);
+            _controller = new HomeController(Mock.Of<ILog>());
         }
 
         [TestMethod]

@@ -7,45 +7,50 @@ namespace pt12lolMvc4Application.Db.Service.ClassLib
 {
     public class UserProfileDbService : IUserProfileDbService
     {
-        IDbRepository<UserProfile> _userProfileRepository;
-        IDbRepository<webpages_Membership> _membershipRepository;
-        readonly Func<IDbRepository<UserProfile>> _userProfileRepositoryInitializer;
-        readonly Func<IDbRepository<webpages_Membership>> _membershipRepositoryInitializer;
+        IEntitiesRepository<UserProfile> _userProfileRepository;
+        IEntitiesRepository<webpages_Membership> _membershipRepository;
+        readonly Func<IEntitiesRepository<UserProfile>> _userProfileRepositoryInitializer;
+        readonly Func<IEntitiesRepository<webpages_Membership>> _membershipRepositoryInitializer;
 
         public UserProfileDbService()
         {
-            _userProfileRepositoryInitializer = () => new DbRepository<UserProfile>();
-            _membershipRepositoryInitializer = () => new DbRepository<webpages_Membership>();
+            _userProfileRepositoryInitializer = () => new EntitiesRepository<UserProfile>();
+            _membershipRepositoryInitializer = () => new EntitiesRepository<webpages_Membership>();
         }
 
-        public UserProfileDbService(Func<IDbRepository<UserProfile>> userProfileRepositoryInitializer, Func<IDbRepository<webpages_Membership>> membershipRepositoryInitializer)
+        public UserProfileDbService(Func<IEntitiesRepository<UserProfile>> userProfileRepositoryInitializer, Func<IEntitiesRepository<webpages_Membership>> membershipRepositoryInitializer)
         {
             _userProfileRepositoryInitializer = userProfileRepositoryInitializer;
             _membershipRepositoryInitializer = membershipRepositoryInitializer;
         }
 
-        public Models.UserProfile GetUserProfileByName(string name)
+        public Models.UserProfile GetUserProfileByUserName(string name)
         {
             using (_userProfileRepository = _userProfileRepositoryInitializer())
             {
-                return Mapper.Map<Models.UserProfile>(_userProfileRepository.Get(u => u.UserName.Equals(name)).FirstOrDefault());
+                return Mapper.Map<UserProfile, Models.UserProfile>(_userProfileRepository.Get(u => u.UserName.Equals(name)).FirstOrDefault());
             }
         }
 
-        public void AddUser(Models.UserProfile toAdd)
+        public Models.webpages_Membership GetMembershipByUserName(string userName)
         {
             using (_userProfileRepository = _userProfileRepositoryInitializer())
             {
-                _userProfileRepository.Insert(Mapper.Map<UserProfile>(toAdd));
-                _userProfileRepository.Save();
+                IQueryable<UserProfile> foundUserProfilesByName = _userProfileRepository.Get(u => u.UserName.Equals(userName));
+                int userId = foundUserProfilesByName.Any() ? foundUserProfilesByName.First().UserId : 0;
+                using (_membershipRepository = _membershipRepositoryInitializer())
+                {
+                    return Mapper.Map<webpages_Membership, Models.webpages_Membership>(_membershipRepository.Get(userId));
+                }
             }
         }
 
-        public string GetSaltByUserName(string name)
+        public string GetPasswordSaltByUserName(string userName)
         {
             using (_userProfileRepository = _userProfileRepositoryInitializer())
             {
-                int userId = _userProfileRepository.Get(u => u.UserName.Equals(name)).First().UserId;
+                IQueryable<UserProfile> foundUserProfilesByName = _userProfileRepository.Get(u => u.UserName.Equals(userName));
+                int userId = foundUserProfilesByName.Any() ? foundUserProfilesByName.First().UserId : 0;
                 using (_membershipRepository = _membershipRepositoryInitializer())
                 {
                     return _membershipRepository.Get(userId).PasswordSalt;
@@ -53,25 +58,21 @@ namespace pt12lolMvc4Application.Db.Service.ClassLib
             }
         }
 
+        public void AddUser(Models.UserProfile toAdd)
+        {
+            using (_userProfileRepository = _userProfileRepositoryInitializer())
+            {
+                _userProfileRepository.Insert(Mapper.Map<Models.UserProfile, UserProfile>(toAdd));
+                _userProfileRepository.Save();
+            }
+        }
+
         public void UpdateMembership(Models.webpages_Membership toUpdate)
         {
             using (_membershipRepository = _membershipRepositoryInitializer())
             {
-                _membershipRepository.Update(Mapper.Map<webpages_Membership>(toUpdate));
+                _membershipRepository.Update(Mapper.Map<Models.webpages_Membership, webpages_Membership>(toUpdate));
                 _membershipRepository.Save();
-            }
-        }
-
-
-        public Models.webpages_Membership GetMembershipByUserName(string userName)
-        {
-            using (_userProfileRepository = _userProfileRepositoryInitializer())
-            {
-                int userId = _userProfileRepository.Get(u => u.UserName.Equals(userName)).First().UserId;
-                using (_membershipRepository = _membershipRepositoryInitializer())
-                {
-                    return Mapper.Map<Models.webpages_Membership>(_membershipRepository.Get(userId));
-                }
             }
         }
     }

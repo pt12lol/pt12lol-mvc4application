@@ -4,10 +4,10 @@ namespace pt12lolMvc4Application.Db.Service.ClassLib
 {
     public interface IUserProfileDbService
     {
-        UserProfile GetUserProfileByName(string name);
-        void AddUser(UserProfile toAdd);
-        string GetSaltByUserName(string name);
-        void UpdateMembership(webpages_Membership toUpdate);
+        UserProfile GetUserProfileByUserName(string name);
         webpages_Membership GetMembershipByUserName(string userName);
+        string GetPasswordSaltByUserName(string userName);
+        void AddUser(UserProfile toAdd);
+        void UpdateMembership(webpages_Membership toUpdate);
     }
 }

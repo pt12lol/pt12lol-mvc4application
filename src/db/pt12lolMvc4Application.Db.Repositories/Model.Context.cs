@@ -13,9 +13,9 @@ namespace pt12lolMvc4Application.Db.Repositories
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    partial class EntitiesContext : DbContext
     {
-        public Entities()
+        public EntitiesContext()
             : base("name=EntitiesConnection")
         {
         }
@@ -25,9 +25,9 @@ namespace pt12lolMvc4Application.Db.Repositories
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
-        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
-        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public virtual IDbSet<UserProfile> UserProfiles { get; set; }
+        public virtual IDbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual IDbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public virtual IDbSet<webpages_Roles> webpages_Roles { get; set; }
     }
 }
