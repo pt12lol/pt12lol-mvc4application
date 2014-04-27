@@ -3,7 +3,7 @@ using System.Linq;
 using AutoMapper;
 using pt12lolMvc4Application.Db.Repositories;
 
-namespace pt12lolMvc4Application.Db.Service.ClassLib
+namespace pt12lolMvc4Application.Db.Service.WCF
 {
     public class UserProfileDbService : IUserProfileDbService
     {
@@ -22,6 +22,11 @@ namespace pt12lolMvc4Application.Db.Service.ClassLib
         {
             _userProfileRepositoryInitializer = userProfileRepositoryInitializer;
             _membershipRepositoryInitializer = membershipRepositoryInitializer;
+        }
+
+        static UserProfileDbService()
+        {
+            pt12lolConfigurator.Configure();
         }
 
         public Models.UserProfile GetUserProfileByUserName(string name)

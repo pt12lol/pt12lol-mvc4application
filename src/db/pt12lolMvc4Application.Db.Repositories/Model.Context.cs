@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
+
 namespace pt12lolMvc4Application.Db.Repositories
 {
     using System;
